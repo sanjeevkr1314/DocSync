@@ -31,12 +31,12 @@ const YourDocuments = () => {
     <>
       <div className="user_dashboard_container">
         <div className="user_dashboard_left">
-          {userStatus === "Approved" && <UserMenu />}{" "}
+          {userStatus === "Approved" && <UserMenu id="3"/>}{" "}
         </div>
         <div className="user_docs_right">
-          <h1>Your Documents</h1>
+          <h3>Your Documents</h3>
           <div className="border shadow">
-            <table className="table">
+            <table className="table table-hover" >
               <thead>
                 <tr>
                   <th scope="col">#</th>

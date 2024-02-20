@@ -14,6 +14,7 @@ import Profile from "./pages/User/Profile";
 import UploadDocument from "./pages/User/UploadDocument";
 import YourDocuments from "./pages/User/YourDocuments";
 import Footer from "./components/Layout/Footer.jsx";
+import AdminProfile from "./pages/Admin/AdminProfile.jsx";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
           </Route>
           <Route path="/dashboard" element={<AdminRoute />}>
             <Route path="admin" element={<AdminDashboard />} />
+            <Route path="admin/profile" element={<AdminProfile />} />
             <Route path="admin/all-users" element={<AllUsers />} />
             <Route path="admin/all-documents" element={<AllDocuments />} />
           </Route>

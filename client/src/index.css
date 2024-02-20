@@ -87,21 +87,19 @@ footer p {
 }
 
 .user_dashboard_left {
-  /* background-color: blue; */
-  width: 40%;
+  width: 30%;
 }
 
 .user_dashboard_right {
-  width: 60%;
-  margin-top: 5rem;
-  border-radius: 2rem;
+  width: 70%;
+  margin-top: 3rem;
 }
 
 .user_docs_right{
   margin-top: 3rem;
   margin-right: 1rem;
   margin-left: -1rem;
-  width: 60%;
+  width: 90%;
 }
 
 .pnf {
