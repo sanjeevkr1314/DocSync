@@ -1,0 +1,124 @@
+.card {
+  width: 25rem;
+  background-color: #ffff;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  margin-top: -2rem;
+  margin-left: -8rem;
+  /* background-color: red; */
+}
+
+.card-header {
+  border-bottom: 1px solid #f6f6f6;
+  padding: 1rem 1.2rem;
+  background-color: #3f515a;
+  color: white;
+}
+
+.card-body {
+  padding: 1rem;
+}
+
+input[type="file"] {
+  width: 20rem;
+  font-size: 1rem;
+  padding: 0.6rem 0.8rem;
+  border-radius: 0.2rem;
+  border: 2px solid #c7c6c6;
+  margin-left: 1.4rem;
+}
+
+.text_input{
+  margin-left: 1.4rem;
+  margin-top: 5%;
+  height: 3rem;
+  width: 20rem;
+}
+
+button {
+  width: 20rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: black;
+  background-color: #cccccc;
+  border: none;
+  border-radius: 0.2rem;
+  padding: 0.5rem;
+  margin-top: 1rem;
+  margin-left: 1.4rem;
+  cursor: pointer;
+}
+
+.preview{
+  text-align: center;
+}
+
+.pdf-container {
+  z-index: 100;
+  /* max-width: 500px;
+  max-height: 500px; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 40px;
+}
+
+.pdf-container img {
+  max-width: 500px;
+  max-height: 500px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.pdf-container .rpv-core__viewer {
+  max-width: 100%;
+  max-height: 800px; /* Adjust as needed */
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.pdf-container .rpv-core__viewer .rpv-core__canvas {
+  border-radius: 4px;
+  width: 100%;
+}
+
+.pdf-container .rpv-core__viewer .rpv-core__page {
+  margin: 16px; /* Adjust the margin as needed */
+}
+
+.pdf-container .rpv-core__toolbar {
+  background-color: #3f515a; /* Change toolbar background color */
+}
+
+.pdf-container .rpv-core__toolbar-button {
+  color: white; /* Change toolbar button color */
+}
+
+.pdf-container .rpv-core__annotation-layer {
+  background-color: transparent; /* Make annotation layer transparent */
+}
+
+.pdf-container .rpv-core__text-layer {
+  font-size: 14px; /* Adjust the text layer font size */
+}
+
+.success-text {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #537f6e;
+  background-color: #e2ece9;
+  border-radius: 0.2rem;
+  padding: 0.5rem 1rem;
+  margin-top: 1rem;
+}
+
+.error-text {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #8d4328;
+  background-color: #faefeb;
+  border-radius: 0.2rem;
+  padding: 0.5rem 1rem;
+}
