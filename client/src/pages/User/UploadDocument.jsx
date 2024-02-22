@@ -144,10 +144,10 @@ const UploadDocument = () => {
     <>
       <div className="user_dashboard_container">
         <div className="user_dashboard_left">
-          {userStatus === "Approved" && <UserMenu id="2"/>}{" "}
+          {userStatus === "Approved" && <UserMenu id="2" />}{" "}
         </div>
         <div className="user_dashboard_right">
-          <div className="card" style={{margin:"10px 0px 0px 100px"}}>
+          <div className="card" style={{ margin: "10px 0px 0px 100px" }}>
             <div className="card-header">
               <h3>Upload new document</h3>
             </div>
@@ -186,6 +186,7 @@ const UploadDocument = () => {
       </div>
       <div className="pdf-container">{renderPreview()}</div>
       <ToastContainer
+        style={{ width: "500px" }}
         position="top-right"
         autoClose={5000}
         hideProgressBar={false}

@@ -42,6 +42,7 @@ const YourDocuments = () => {
                   <th scope="col">#</th>
                   <th scope="col">Name</th>
                   <th scope="col">File Type</th>
+                  <th scope="col">Date of Upload</th>
                   <th scope="col">Description</th>
                 </tr>
               </thead>
@@ -60,6 +61,7 @@ const YourDocuments = () => {
                         </a>
                       </td>
                       <td>{doc?.file?.format} </td>
+                      <td>{doc?.createdAt.substring(0,10)}</td>
                       <td>{doc?.desc}</td>
                     </tr>
                   );

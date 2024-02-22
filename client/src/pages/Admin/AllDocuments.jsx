@@ -44,6 +44,7 @@ const AllDocuments = () => {
                   <th scope="col">Name</th>
                   <th scope="col">File Type</th>
                   <th scope="col">Owner</th>
+                  <th scope="col">Date of Upload</th>
                   <th scope="col">Description</th>
                 </tr>
               </thead>
@@ -63,6 +64,7 @@ const AllDocuments = () => {
                       </td>
                       <td>{doc?.file?.format} </td>
                       <td>{JSON.parse(doc?.owner).email}</td>
+                      <td>{doc?.createdAt.substring(0,10)}</td>
                       <td>{doc?.desc}</td>
                     </tr>
                   );

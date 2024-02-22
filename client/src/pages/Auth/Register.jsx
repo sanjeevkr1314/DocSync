@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import "./Register.css";
+import { ToastContainer, toast } from "react-toastify";
 
 const Register = () => {
   const [data, setData] = useState({
@@ -21,9 +22,17 @@ const Register = () => {
     e.preventDefault();
     try {
       const url = "http://localhost:8080/api/auth/register";
-      const { data: res } = await axios.post(url, data);
-      navigate("/login");
+      const res = await axios.post(url, data);
 
+      if (res.data.success) {
+        toast.success("Registration Successful, Redirecting to Login Page...");
+        setTimeout(() => {
+          navigate("/login");
+        }, 5000);
+      } else {
+        // console.log(res.data.message);
+        toast.error("Registration Failed, Please try again.");
+      }
     } catch (error) {
       if (
         error.response &&
@@ -31,6 +40,7 @@ const Register = () => {
         error.response.status <= 500
       ) {
         setError(error.response.data.message);
+        toast.error("Registration Failed");
       }
     }
   };
@@ -47,7 +57,11 @@ const Register = () => {
           </Link>
         </div>
         <div className="signup_right">
-          <form className="signup_form_container2" onSubmit={handleSubmit} autoComplete="on">
+          <form
+            className="signup_form_container2"
+            onSubmit={handleSubmit}
+            autoComplete="on"
+          >
             <h1>Create Account</h1>
             <input
               type="text"
@@ -93,6 +107,19 @@ const Register = () => {
           </form>
         </div>
       </div>
+      <ToastContainer
+        style={{ width: "500px" }}
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
     </div>
   );
 };

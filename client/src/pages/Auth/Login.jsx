@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import "./Login.css";
 import { useAuth } from "../../context/auth";
 import { useNavigate, useLocation } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 
 const Login = () => {
   const [data, setData] = useState({ email: "", password: "" });
@@ -22,20 +23,22 @@ const Login = () => {
     try {
       const url = "http://localhost:8080/api/auth/login";
       const res = await axios.post(url, data);
-      
-      if(res.data.success){
+
+      if (res.data.success) {
+        toast.success("Login Successful, Redirecting to Home Page...");
         setAuth({
           ...auth,
           user: res.data.user,
           token: res.data.token,
         });
         localStorage.setItem("auth", JSON.stringify(res.data));
-        navigate(location.state || "/");
+        setTimeout(() => {
+          navigate(location.state || "/");
+        }, 3000);
+      } else {
+        // console.log(res.data.message);
+        toast.error("Login Failed, Please try again.");
       }
-      else{
-        console.log(res.data.message);
-      }
-      
     } catch (error) {
       if (
         error.response &&
@@ -43,6 +46,7 @@ const Login = () => {
         error.response.status <= 500
       ) {
         setError(error.response.data.message);
+        toast.error("Login Failed, Please try again.");
       }
     }
   };
@@ -91,6 +95,19 @@ const Login = () => {
           </Link>
         </div>
       </div>
+      <ToastContainer
+        style={{ width: "500px" }}
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
     </div>
   );
 };
