@@ -11,13 +11,12 @@ export const registerController = async (req, res) => {
     if (error)
       return res.status(400).send({ message: error.details[0].message });
 
-    //check user
+    //check if user already exists
     const exisitingUser = await User.findOne({ email: req.body.email });
-    //exisiting user
     if (exisitingUser) {
       return res.status(409).send({
         success: false,
-        message: "User with given email already Exist!",
+        message: "User already exists!",
       });
     }
     //hash password and save user
@@ -98,7 +97,12 @@ const validateRegister = (data) => {
     email: Joi.string().email().required().label("Email"),
     password: passwordComplexity().required().label("Password"),
   });
-  return schema.validate(data);
+  return schema.validate({
+    firstName: data.firstName,
+    lastName: data.lastName,
+    email: data.email,
+    password: data.password,
+  });
 };
 
 const validateLogin = (data) => {

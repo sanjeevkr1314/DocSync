@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import connectDB from "./config/db.js";
 import authRoute from "./routes/authRoute.js";
+import otpRoutes from "./routes/otpRoutes.js";
 
 dotenv.config();
 const app = express();
@@ -16,6 +17,7 @@ app.use(cors());
 
 // routes
 app.use("/api/auth", authRoute);
+app.use("/api/otp", otpRoutes);
 
 //rest api
 app.get("/", (req, res) => {
