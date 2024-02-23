@@ -29,7 +29,7 @@ const UserMenu = (props) => {
           </div>
           <div className="user_menu_navlink" style={props.id === "3" ? {backgroundColor: "#0d6efd"} : {}}>
             <NavLink
-              to="/dashboard/user/all-documents"
+              to="/dashboard/user/documents"
               className="user_menu_nav"
               style={props.id === "3" ? {color: "white"} :{}}
             >

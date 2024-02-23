@@ -18,6 +18,15 @@ const Register = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
+  const setErrorWithTimeout = (errorMessage) => {
+    setError(errorMessage);
+
+    // Set a timeout to reset the error after 10 seconds
+    setTimeout(() => {
+      setError(null);
+    }, 5000);
+  };
+
   const handleChange = ({ currentTarget: input }) => {
     setData({ ...data, [input.name]: input.value });
   };
@@ -48,7 +57,7 @@ const Register = () => {
         error.response.status >= 400 &&
         error.response.status <= 500
       ) {
-        setError(error.response.data.message);
+        setErrorWithTimeout(error.response.data.message);
       }
     }
   };
@@ -65,7 +74,7 @@ const Register = () => {
         setIsVerified(1);
       } else {
         // console.log(res.data.message);
-        setError("Invalid OTP, Please try again.");
+        setErrorWithTimeout("Invalid OTP, Please try again.");
       }
     } catch (error) {
       if (
@@ -73,7 +82,7 @@ const Register = () => {
         error.response.status >= 400 &&
         error.response.status <= 500
       ) {
-        setError(error.response.data.message);
+        setErrorWithTimeout(error.response.data.message);
       }
     }
   };
@@ -99,7 +108,7 @@ const Register = () => {
         error.response.status >= 400 &&
         error.response.status <= 500
       ) {
-        setError(error.response.data.message);
+        setErrorWithTimeout(error.response.data.message);
         toast.error("Registration Failed");
       }
     }

@@ -27,14 +27,14 @@ function App() {
             <Route path="user" element={<UserDashboard />} />
             <Route path="user/profile" element={<Profile />} />
             <Route path="user/upload-document" element={<UploadDocument />} />
-            <Route path="user/all-documents" element={<YourDocuments />} />
-            <Route/>
+            <Route path="user/documents" element={<YourDocuments />} />
+            <Route />
           </Route>
           <Route path="/dashboard" element={<AdminRoute />}>
             <Route path="admin" element={<AdminDashboard />} />
             <Route path="admin/profile" element={<AdminProfile />} />
-            <Route path="admin/all-users" element={<AllUsers />} />
-            <Route path="admin/all-documents" element={<AllDocuments />} />
+            <Route path="admin/users" element={<AllUsers />} />
+            <Route path="admin/documents" element={<AllDocuments />} />
           </Route>
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />

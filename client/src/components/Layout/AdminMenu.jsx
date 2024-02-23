@@ -14,13 +14,13 @@ const AdminMenu = () => {
             Profile
           </NavLink>
           <NavLink
-            to="/dashboard/admin/all-users"
+            to="/dashboard/admin/users"
             className="list-group-item list-group-item-action"
           >
             All Users
           </NavLink>
           <NavLink
-            to="/dashboard/admin/all-documents"
+            to="/dashboard/admin/documents"
             className="list-group-item list-group-item-action"
           >
             All documents

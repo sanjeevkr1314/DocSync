@@ -14,9 +14,10 @@ import {
   isApproved,
 } from "../middlewares/authMiddlewares.js";
 import { upload } from "../middlewares/multer.middleware.js";
-import uploadController from "../controllers/uploadController.js";
-import { getFileController } from "../controllers/getFileController.js";
-import { getAllDocumentsUserController } from "../controllers/userControllers.js";
+import {
+  getAllDocumentsUserController,
+  uploadController,
+} from "../controllers/userControllers.js";
 
 //router object
 const router = express.Router();
@@ -25,27 +26,19 @@ const router = express.Router();
 router.post("/register", registerController);
 router.post("/login", loginController);
 
-//protected User route auth
+//protected User route auth (helps in frontend private routes)
 router.get("/user-auth", requireSignIn, (req, res) => {
   res.status(200).send({ ok: true });
 });
 
-//protected Admin route auth
+//protected Admin route auth (helps in frontend private routes)
 router.get("/admin-auth", requireSignIn, isAdmin, (req, res) => {
   res.status(200).send({ ok: true });
 });
 
-// users admin
+// admin
 router.get("/all-users", requireSignIn, isAdmin, getAllUsersController);
-// documents admin
-router.get(
-  "/all-documents",
-  requireSignIn,
-  isApproved,
-  getAllDocumentsController
-);
-
-// user status update
+router.get("/all-documents", requireSignIn, isAdmin, getAllDocumentsController);
 router.put(
   "/user-status/:userId",
   requireSignIn,
@@ -53,18 +46,19 @@ router.put(
   userStatusController
 );
 
-// upload file
-router.post("/upload", upload.single("uploadedFile"), uploadController);
-
-// document user
+// user
+router.post(
+  "/upload",
+  requireSignIn,
+  isApproved,
+  upload.single("uploadedFile"),
+  uploadController
+);
 router.get(
   "/documents/:userId",
   requireSignIn,
   isApproved,
   getAllDocumentsUserController
 );
-
-// get file
-router.get("/get-file/:fileId", getFileController);
 
 export default router;

@@ -14,6 +14,15 @@ const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const setErrorWithTimeout = (errorMessage) => {
+    setError(errorMessage);
+
+    // Set a timeout to reset the error after 10 seconds
+    setTimeout(() => {
+      setError(null);
+    }, 5000);
+  };
+
   const handleChange = ({ currentTarget: input }) => {
     setData({ ...data, [input.name]: input.value });
   };
@@ -34,7 +43,7 @@ const Login = () => {
         localStorage.setItem("auth", JSON.stringify(res.data));
         setTimeout(() => {
           navigate(location.state || "/");
-        }, 3000);
+        }, 2000);
       } else {
         // console.log(res.data.message);
         toast.error("Login Failed, Please try again.");
@@ -45,8 +54,8 @@ const Login = () => {
         error.response.status >= 400 &&
         error.response.status <= 500
       ) {
-        setError(error.response.data.message);
-        toast.error("Login Failed, Please try again.");
+        setErrorWithTimeout(error.response.data.message);
+        // toast.error("Login Failed, Please try again.");
       }
     }
   };
@@ -98,7 +107,7 @@ const Login = () => {
       <ToastContainer
         style={{ width: "500px" }}
         position="top-right"
-        autoClose={3000}
+        autoClose={2000}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick

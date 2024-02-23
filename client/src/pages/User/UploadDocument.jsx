@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../../context/auth";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import "./UploadDocument.css";
 import UserMenu from "../../components/Layout/UserMenu";
 import { Viewer, Worker } from "@react-pdf-viewer/core";
@@ -118,22 +119,23 @@ const UploadDocument = () => {
     formData.append("owner", owner);
 
     try {
-      const response = await fetch("http://localhost:8080/api/auth/upload", {
-        method: "POST",
-        body: formData,
-      });
+      const response = await axios.post(
+        "http://localhost:8080/api/auth/upload",
+        formData
+      );
 
-      const data = await response.json();
+      console.log(response);
+      const data = await response.data;
 
       if (data.success) {
         // console.log("data", data);
         toast.success("Upload Successful");
       } else {
-        // console.error("File upload failed", data.message);
+        console.error("File upload failed", data.message);
         toast.error("File upload failed");
       }
     } catch (error) {
-      // console.error("Error during file upload", error);
+      console.error("Error during file upload", error);
       toast.error("File upload failed");
     }
 
