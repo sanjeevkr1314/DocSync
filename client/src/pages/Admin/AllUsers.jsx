@@ -3,17 +3,12 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import AdminMenu from "../../components/Layout/AdminMenu";
 import { useAuth } from "../../context/auth";
-import { Select } from "antd";
-const { Option } = Select;
+import UserCard from "./UserCard";
 
 const AllUsers = () => {
-  const [status] = useState([
-    "Not Processed",
-    "Approved",
-    "Cancelled",
-  ]);
-  // const [changeStatus, setChangeStatus] = useState("");
   const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [auth] = useAuth();
   const navigate = useNavigate();
   const userRole = auth?.user?.role;
@@ -24,76 +19,37 @@ const AllUsers = () => {
         "http://localhost:8080/api/auth/all-users"
       );
       setUsers(data);
+      setLoading(false);
     } catch (error) {
       console.log(error);
+      setError("Error fetching documents. Please try again.");
+      setLoading(false);
     }
   };
-  
+
   useEffect(() => {
     if (userRole !== 1) navigate("/dashboard");
     if (auth?.token) getUsers();
   }, [auth?.token, userRole]);
 
-  const handleChange = async (userId, value) => {
-    try {
-      const { data } = await axios.put(
-        `http://localhost:8080/api/auth/user-status/${userId}`,
-        {
-          status: value,
-        }
-      );
-      getUsers();
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  
   return (
     <>
       <div className="row dashboard">
         <div className="col-md-3">
-          <AdminMenu />
+          <AdminMenu id="2" />
         </div>
         <div className="col-md-9">
           <h1 className="text-center">All Users</h1>
-
-          <div className="border shadow">
-            <table className="table">
-              <thead>
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Name</th>
-                  <th scope="col">Role</th>
-                  <th scope="col">Email</th>
-                  <th scope="col">Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {users?.map((user, i) => {
-                  return (
-                    <tr key={i + 1}>
-                      <th scope="row">{i + 1}</th>
-                      <td>{user?.firstName} {user?.lastName}</td>
-                      <td>{user?.role ? "Admin" : "User"}</td>
-                      <td>{user?.email}</td>
-                      <td>
-                        <Select
-                          border="false"
-                          onChange={(value) => handleChange(user._id, value)}
-                          defaultValue={user?.status}
-                        >
-                          {status.map((s, i) => (
-                            <Option key={i} value={s}>
-                              {s}
-                            </Option>
-                          ))}
-                        </Select>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+          <div className="all-users-container">
+            {loading && <h4 className="text-center my-4">Loading...</h4>}
+            {error && <div className="alert alert-danger">{error}</div>}
+            {!loading && !error && (
+              <div className="all-users-container">
+                {users?.map((user) => (
+                  <UserCard {...user} />
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </div>

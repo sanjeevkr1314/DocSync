@@ -86,7 +86,11 @@ const UploadDocument = () => {
           <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
             {viewDoc && (
               <>
-                <Viewer fileUrl={viewDoc} plugins={[newPlugin]} />
+                <Viewer
+                  fileUrl={viewDoc}
+                  onError={(error) => console.error("PDF error:", error)}
+                  plugins={[newPlugin]}
+                />
               </>
             )}
             {!viewDoc && (

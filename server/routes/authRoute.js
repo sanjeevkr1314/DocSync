@@ -7,6 +7,7 @@ import {
   getAllUsersController,
   userStatusController,
   getAllDocumentsController,
+  getSingleUserController,
 } from "../controllers/adminControllers.js";
 import {
   isAdmin,
@@ -37,6 +38,7 @@ router.get("/admin-auth", requireSignIn, isAdmin, (req, res) => {
 });
 
 // admin
+router.get("/user/:userId", requireSignIn, isAdmin, getSingleUserController);
 router.get("/all-users", requireSignIn, isAdmin, getAllUsersController);
 router.get("/all-documents", requireSignIn, isAdmin, getAllDocumentsController);
 router.put(

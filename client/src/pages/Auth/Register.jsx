@@ -3,6 +3,9 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import "./Register.css";
 import { ToastContainer, toast } from "react-toastify";
+import { InputAdornment, IconButton } from "@material-ui/core";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 const Register = () => {
   const [data, setData] = useState({
@@ -12,9 +15,11 @@ const Register = () => {
     email: "",
     otp: "",
   });
+  const [showPassword, setShowPassword] = useState(false);
   const [isVerified, setIsVerified] = useState(0);
   const [otpSent, setOtpSent] = useState(0);
   const [resendOTP, setResendOTP] = useState(1);
+  const [sendingOTP, setSendingOTP] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
@@ -34,6 +39,7 @@ const Register = () => {
   const sendOTP = async (e) => {
     e.preventDefault();
     try {
+      setSendingOTP(true);
       const url = "http://localhost:8080/api/otp/send-otp";
       const res = await axios.post(url, data);
 
@@ -60,6 +66,7 @@ const Register = () => {
         setErrorWithTimeout(error.response.data.message);
       }
     }
+    setSendingOTP(false);
   };
 
   const verifyOTP = async (e) => {
@@ -85,6 +92,10 @@ const Register = () => {
         setErrorWithTimeout(error.response.data.message);
       }
     }
+  };
+
+  const handleTogglePassword = () => {
+    setShowPassword(!showPassword);
   };
 
   const handleSubmit = async (e) => {
@@ -152,15 +163,30 @@ const Register = () => {
                   required
                   className="signup_input"
                 />
-                <input
-                  type="password"
-                  placeholder="Create a strong password for your account"
-                  name="password"
-                  onChange={handleChange}
-                  value={data.password}
-                  required
-                  className="signup_input"
-                />
+                <div className="login_password_container">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Password"
+                    name="password"
+                    onChange={handleChange}
+                    value={data.password}
+                    required
+                    className="login_input"
+                  />
+                  <InputAdornment position="end">
+                    <IconButton
+                      edge="end"
+                      onClick={handleTogglePassword}
+                      style={{ width: "30px", height: "30px" }}
+                    >
+                      {showPassword ? (
+                        <VisibilityOffIcon />
+                      ) : (
+                        <VisibilityIcon />
+                      )}
+                    </IconButton>
+                  </InputAdornment>
+                </div>
                 {error && <div className="signup_error_msg">{error}</div>}
                 <button type="submit" className="signup_green_btn">
                   Register
@@ -194,7 +220,7 @@ const Register = () => {
 
                 {resendOTP === 1 && (
                   <button onClick={sendOTP} className="signup_green_btn">
-                    Send OTP
+                    { sendingOTP? "Please wait" : "Send OTP" }
                   </button>
                 )}
 

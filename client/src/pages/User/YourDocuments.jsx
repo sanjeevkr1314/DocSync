@@ -60,8 +60,8 @@ const YourDocuments = () => {
                           {doc?.name}
                         </a>
                       </td>
-                      <td>{doc?.file?.format} </td>
-                      <td>{doc?.createdAt.substring(0,10)}</td>
+                      <td>{doc?.file?.format.toUpperCase()} </td>
+                      <td>{new Date(doc?.createdAt).toLocaleDateString('en-GB')}</td>
                       <td>{doc?.desc}</td>
                     </tr>
                   );

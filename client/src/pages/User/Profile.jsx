@@ -36,7 +36,9 @@ const Profile = () => {
                         {auth?.user?.fName + " "}
                         {auth?.user?.lName}
                       </h5>
-                      <p className="text-muted mb-1">Full Stack Developer</p>
+                      <p className="text">
+                        {auth?.user?.role === 1 ? "Admin" : "User"}
+                      </p>
                       <p className="text-muted mb-4">
                         Jaipur, Rajasthan, India
                       </p>

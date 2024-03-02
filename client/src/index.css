@@ -130,6 +130,11 @@ footer p {
   width: 90%;
 }
 
+.all-users-container{
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .pnf {
   display: flex;
   min-height: 65vh;

@@ -56,8 +56,8 @@ button {
 
 .pdf-container {
   z-index: 100;
-  /* max-width: 500px;
-  max-height: 500px; */
+  /* max-width: 1000px;
+  max-height: 1000px; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -85,25 +85,6 @@ button {
   width: 100%;
 }
 
-.pdf-container .rpv-core__viewer .rpv-core__page {
-  margin: 16px; /* Adjust the margin as needed */
-}
-
-.pdf-container .rpv-core__toolbar {
-  background-color: #3f515a; /* Change toolbar background color */
-}
-
-.pdf-container .rpv-core__toolbar-button {
-  color: white; /* Change toolbar button color */
-}
-
-.pdf-container .rpv-core__annotation-layer {
-  background-color: transparent; /* Make annotation layer transparent */
-}
-
-.pdf-container .rpv-core__text-layer {
-  font-size: 14px; /* Adjust the text layer font size */
-}
 
 .success-text {
   font-size: 0.8rem;

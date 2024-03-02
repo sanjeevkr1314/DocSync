@@ -5,11 +5,15 @@ import "./Login.css";
 import { useAuth } from "../../context/auth";
 import { useNavigate, useLocation } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
+import { InputAdornment, IconButton } from "@material-ui/core";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 const Login = () => {
   const [data, setData] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
   const [auth, setAuth] = useAuth();
+  const [showPassword, setShowPassword] = useState(false);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -25,6 +29,10 @@ const Login = () => {
 
   const handleChange = ({ currentTarget: input }) => {
     setData({ ...data, [input.name]: input.value });
+  };
+
+  const handleTogglePassword = () => {
+    setShowPassword(!showPassword);
   };
 
   const handleSubmit = async (e) => {
@@ -80,15 +88,26 @@ const Login = () => {
               className="login_input"
               autoComplete="on"
             />
-            <input
-              type="password"
-              placeholder="Password"
-              name="password"
-              onChange={handleChange}
-              value={data.password}
-              required
-              className="login_input"
-            />
+            <div className="login_password_container">
+              <input
+                type={showPassword ? "text" : "password"}
+                placeholder="Password"
+                name="password"
+                onChange={handleChange}
+                value={data.password}
+                required
+                className="login_input"
+              />
+              <InputAdornment position="end">
+                <IconButton
+                  edge="end"
+                  onClick={handleTogglePassword}
+                  style={{ width: "30px", height: "30px" }}
+                >
+                  {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                </IconButton>
+              </InputAdornment>
+            </div>
             {error && <div className="login_error_msg">{error}</div>}
             <button type="submit" className="login_green_btn">
               Log In

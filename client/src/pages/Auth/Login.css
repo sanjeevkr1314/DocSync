@@ -42,6 +42,13 @@
   font-size: 14px;
 }
 
+.login_password_container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 370px;
+}
+
 .login_error_msg {
   width: 370px;
   padding: 15px;
