@@ -70,7 +70,7 @@ const AllDocuments = () => {
                             {doc?.name}
                           </a>
                         </td>
-                        <td>{doc?.file?.format.toUpperCase()} </td>
+                        <td>{doc?.file?.format?.toUpperCase() || 'N/A' } </td>
                         <td>{JSON.parse(doc?.owner).email}</td>
                         <td>
                           {new Date(doc?.createdAt).toLocaleDateString("en-GB")}

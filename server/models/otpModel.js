@@ -26,8 +26,11 @@ async function sendVerificationEmail(email, otp) {
       "Verification Email",
       `
       <p>Dear Sir/Madam,</p>
-      <p>${otp} is your OTP to register securely on DocSync. </p>
-      <p>Please Note: This OTP is valid for 5 minutes and will expire after that. Thank you for registering with us.</p>
+      <p>Please use the OTP below to verify your email on Docsync.</p>
+      <h3>${otp}</h3>
+      <p>Please Note: This OTP is valid for 5 minutes and will expire after that.</p>
+
+      <p>If you didn’t request this, you can ignore this email.</p>
 
       <p>Regards,</p>
       <p>DocSync Team</p>`

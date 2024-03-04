@@ -2,6 +2,7 @@ import express from "express";
 import {
   registerController,
   loginController,
+  resetPasswordController,
 } from "../controllers/authController.js";
 import {
   getAllUsersController,
@@ -26,6 +27,7 @@ const router = express.Router();
 //routing
 router.post("/register", registerController);
 router.post("/login", loginController);
+router.post("/reset-password", resetPasswordController);
 
 //protected User route auth (helps in frontend private routes)
 router.get("/user-auth", requireSignIn, (req, res) => {

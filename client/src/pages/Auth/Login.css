@@ -60,6 +60,21 @@
   text-align: center;
 }
 
+.forgot {
+  color: lighten(blue, 10%);
+  text-decoration: none;
+  font-size: .80em;
+  margin: 10px;
+  padding: 0;
+  align-self: flex-end;
+  
+  &:hover {
+    color:darken(blue, 5%);
+  }
+  /* &:active{ 
+  } */
+}
+
 .login_right {
   flex: 1;
   display: flex;

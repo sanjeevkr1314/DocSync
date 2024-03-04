@@ -90,6 +90,44 @@ export const loginController = async (req, res) => {
   }
 };
 
+// Password reset controller
+export const resetPasswordController = async (req, res) => {
+  try {
+    // validation
+    const { error } = validatePasswordReset(req.body);
+    if (error)
+      return res
+        .status(400)
+        .send({ success: false, message: error.details[0].message });
+
+    // check if user exists or not
+    const user = await User.findOne({ email: req.body.email });
+    if (!user)
+      return res
+        .status(404)
+        .send({ success: false, message: "User not found" });
+
+    // hash password and save user
+    const hashedPassword = await hashPassword(req.body.password);
+    await User.updateOne(
+      { email: req.body.email },
+      { $set: { password: hashedPassword } }
+    );
+
+    res.status(200).send({
+      success: true,
+      message: "Password reset successfully",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Error in password reset",
+      error,
+    });
+  }
+};
+
 const validateRegister = (data) => {
   const schema = Joi.object({
     firstName: Joi.string().required().label("First Name"),
@@ -109,6 +147,21 @@ const validateLogin = (data) => {
   const schema = Joi.object({
     email: Joi.string().email().required().label("Email"),
     password: Joi.string().required().label("Password"),
+  });
+  return schema.validate(data);
+};
+
+const validatePasswordReset = (data) => {
+  const schema = Joi.object({
+    email: Joi.string().email().required().label("Email"),
+    password: passwordComplexity().required().label("Password"),
+    confirmPassword: Joi.string()
+      .valid(Joi.ref("password"))
+      .required()
+      .label("Confirm Password")
+      .messages({
+        "any.only": "{{#label}} does not match the password",
+      }),
   });
   return schema.validate(data);
 };

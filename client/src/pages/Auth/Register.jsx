@@ -3,9 +3,11 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import "./Register.css";
 import { ToastContainer, toast } from "react-toastify";
-import { InputAdornment, IconButton } from "@material-ui/core";
+import { Input, InputAdornment, IconButton } from "@material-ui/core";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import EmailOutlined from "@mui/icons-material/EmailOutlined";
+import LockOutlined from "@mui/icons-material/LockOutlined";
 
 const Register = () => {
   const [data, setData] = useState({
@@ -40,7 +42,7 @@ const Register = () => {
     e.preventDefault();
     try {
       setSendingOTP(true);
-      const url = "http://localhost:8080/api/otp/send-otp";
+      const url = "http://localhost:8080/api/otp/send-otp-register";
       const res = await axios.post(url, data);
 
       if (res.data.success) {
@@ -145,7 +147,7 @@ const Register = () => {
             <h1>Create new account</h1>
             {isVerified ? (
               <>
-                <input
+                <Input
                   type="text"
                   placeholder="First Name"
                   name="firstName"
@@ -154,7 +156,7 @@ const Register = () => {
                   required
                   className="signup_input"
                 />
-                <input
+                <Input
                   type="text"
                   placeholder="Last Name"
                   name="lastName"
@@ -163,8 +165,8 @@ const Register = () => {
                   required
                   className="signup_input"
                 />
-                <div className="login_password_container">
-                  <input
+                <div className="login_password_container" style={{display: "flex", flexDirection: "column"}}>
+                  <Input
                     type={showPassword ? "text" : "password"}
                     placeholder="Password"
                     name="password"
@@ -172,20 +174,56 @@ const Register = () => {
                     value={data.password}
                     required
                     className="login_input"
+                    startAdornment={
+                      <InputAdornment position="start">
+                        <LockOutlined />
+                      </InputAdornment>
+                    }
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton
+                          edge="end"
+                          onClick={handleTogglePassword}
+                          style={{ width: "30px", height: "30px" }}
+                        >
+                          {showPassword ? (
+                            <VisibilityOffIcon />
+                          ) : (
+                            <VisibilityIcon />
+                          )}
+                        </IconButton>
+                      </InputAdornment>
+                    }
                   />
-                  <InputAdornment position="end">
-                    <IconButton
-                      edge="end"
-                      onClick={handleTogglePassword}
-                      style={{ width: "30px", height: "30px" }}
-                    >
-                      {showPassword ? (
-                        <VisibilityOffIcon />
-                      ) : (
-                        <VisibilityIcon />
-                      )}
-                    </IconButton>
-                  </InputAdornment>
+                  {/* <Input
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Password"
+                    name="password"
+                    onChange={handleChange}
+                    value={data.password}
+                    required
+                    className="login_input"
+                    startAdornment={
+                      <InputAdornment position="start">
+                        <LockOutlined />
+                      </InputAdornment>
+                    }
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton
+                          edge="end"
+                          onClick={handleTogglePassword}
+                          style={{ width: "30px", height: "30px" }}
+                        >
+                          {showPassword ? (
+                            <VisibilityOffIcon />
+                          ) : (
+                            <VisibilityIcon />
+                          )}
+                        </IconButton>
+                      </InputAdornment>
+                    }
+                  /> */}
                 </div>
                 {error && <div className="signup_error_msg">{error}</div>}
                 <button type="submit" className="signup_green_btn">
@@ -194,7 +232,7 @@ const Register = () => {
               </>
             ) : (
               <>
-                <input
+                <Input
                   type="email"
                   placeholder="Enter your Email address"
                   name="email"
@@ -203,9 +241,14 @@ const Register = () => {
                   required
                   className="signup_input"
                   autoComplete="on"
+                  startAdornment={
+                    <InputAdornment position="start">
+                      <EmailOutlined />
+                    </InputAdornment>
+                  }
                 />
                 {otpSent === 1 && (
-                  <input
+                  <Input
                     type="text"
                     placeholder="Enter OTP sent to your email"
                     name="otp"
@@ -220,7 +263,7 @@ const Register = () => {
 
                 {resendOTP === 1 && (
                   <button onClick={sendOTP} className="signup_green_btn">
-                    { sendingOTP? "Please wait" : "Send OTP" }
+                    {sendingOTP ? "Please wait" : "Send OTP"}
                   </button>
                 )}
 

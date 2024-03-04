@@ -15,6 +15,7 @@ import UploadDocument from "./pages/User/UploadDocument";
 import YourDocuments from "./pages/User/YourDocuments";
 import Footer from "./components/Layout/Footer.jsx";
 import AdminProfile from "./pages/Admin/AdminProfile.jsx";
+import ForgotPassword from "./pages/Auth/ForgotPassword.jsx";
 
 function App() {
   return (
@@ -28,7 +29,6 @@ function App() {
             <Route path="user/profile" element={<Profile />} />
             <Route path="user/upload-document" element={<UploadDocument />} />
             <Route path="user/documents" element={<YourDocuments />} />
-            <Route />
           </Route>
           <Route path="/dashboard" element={<AdminRoute />}>
             <Route path="admin" element={<AdminDashboard />} />
@@ -38,6 +38,7 @@ function App() {
           </Route>
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="*" element={<Pagenotfound />} />
         </Routes>
       </div>

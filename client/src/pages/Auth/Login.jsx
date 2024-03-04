@@ -5,9 +5,11 @@ import "./Login.css";
 import { useAuth } from "../../context/auth";
 import { useNavigate, useLocation } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
-import { InputAdornment, IconButton } from "@material-ui/core";
+import { Input, InputAdornment, IconButton } from "@material-ui/core";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import EmailOutlined from '@mui/icons-material/EmailOutlined';
+import LockOutlined from '@mui/icons-material/LockOutlined';
 
 const Login = () => {
   const [data, setData] = useState({ email: "", password: "" });
@@ -78,7 +80,7 @@ const Login = () => {
             autoComplete="on"
           >
             <h1>Login to Your Account</h1>
-            <input
+            <Input
               type="email"
               placeholder="Email"
               name="email"
@@ -87,9 +89,14 @@ const Login = () => {
               required
               className="login_input"
               autoComplete="on"
+              startAdornment={
+                <InputAdornment position="start">
+                  <EmailOutlined />
+                </InputAdornment>
+              }
             />
             <div className="login_password_container">
-              <input
+              <Input
                 type={showPassword ? "text" : "password"}
                 placeholder="Password"
                 name="password"
@@ -97,21 +104,29 @@ const Login = () => {
                 value={data.password}
                 required
                 className="login_input"
+                startAdornment={
+                  <InputAdornment position="start">
+                    <LockOutlined />
+                  </InputAdornment>
+                }
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      edge="end"
+                      onClick={handleTogglePassword}
+                      style={{ width: "60px", height: "30px"}}
+                    >
+                      {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                    </IconButton>
+                  </InputAdornment>
+                }
               />
-              <InputAdornment position="end">
-                <IconButton
-                  edge="end"
-                  onClick={handleTogglePassword}
-                  style={{ width: "30px", height: "30px" }}
-                >
-                  {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
-                </IconButton>
-              </InputAdornment>
             </div>
             {error && <div className="login_error_msg">{error}</div>}
             <button type="submit" className="login_green_btn">
               Log In
             </button>
+            <Link to="/forgot-password" className="forgot">Forgot password?</Link>
           </form>
         </div>
         <div className="login_right">

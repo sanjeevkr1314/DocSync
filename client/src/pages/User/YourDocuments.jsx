@@ -60,7 +60,7 @@ const YourDocuments = () => {
                           {doc?.name}
                         </a>
                       </td>
-                      <td>{doc?.file?.format.toUpperCase()} </td>
+                      <td>{doc?.file?.format?.toUpperCase() || "N/A"} </td>
                       <td>{new Date(doc?.createdAt).toLocaleDateString('en-GB')}</td>
                       <td>{doc?.desc}</td>
                     </tr>
