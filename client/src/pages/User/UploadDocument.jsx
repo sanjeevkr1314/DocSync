@@ -136,11 +136,11 @@ const UploadDocument = () => {
         toast.success("Upload Successful");
       } else {
         console.error("File upload failed", data.message);
-        toast.error("File upload failed");
+        toast.error("File upload failed", data.message);
       }
     } catch (error) {
       console.error("Error during file upload", error);
-      toast.error("File upload failed");
+      toast.error("File upload failed", error);
     }
 
     setUploadState("Upload");
@@ -156,6 +156,10 @@ const UploadDocument = () => {
           <div className="card" style={{ margin: "10px 0px 0px 100px" }}>
             <div className="card-header">
               <h3>Upload new document</h3>
+              <p>
+                File size should not exceed 50MB. Only PDF, JPEG, JPG, and PNG
+                are allowed.
+              </p>
             </div>
             <div className="card-body">
               <form onSubmit={handleSubmit} encType="multipart/form-data">
