@@ -4,6 +4,8 @@ import dotenv from "dotenv";
 import connectDB from "./config/db.js";
 import authRoute from "./routes/authRoute.js";
 import otpRoute from "./routes/otpRoute.js";
+import userRoute from "./routes/userRoute.js";
+import adminRoute from "./routes/adminRoute.js";
 
 dotenv.config();
 const app = express();
@@ -18,6 +20,8 @@ app.use(cors({origin: 'http://localhost:5173'}));
 // routes
 app.use("/api/auth", authRoute);
 app.use("/api/otp", otpRoute);
+app.use("/api/user", userRoute);
+app.use("/api/admin", adminRoute);
 
 //rest api
 app.get("/", (req, res) => {

@@ -5,21 +5,9 @@ import {
   resetPasswordController,
 } from "../controllers/authController.js";
 import {
-  getAllUsersController,
-  userStatusController,
-  getAllDocumentsController,
-  getSingleUserController,
-} from "../controllers/adminControllers.js";
-import {
   isAdmin,
-  requireSignIn,
-  isApproved,
+  requireSignIn
 } from "../middlewares/authMiddlewares.js";
-import { upload } from "../middlewares/multer.middleware.js";
-import {
-  getAllDocumentsUserController,
-  uploadController,
-} from "../controllers/userControllers.js";
 
 //router object
 const router = express.Router();
@@ -38,31 +26,5 @@ router.get("/user-auth", requireSignIn, (req, res) => {
 router.get("/admin-auth", requireSignIn, isAdmin, (req, res) => {
   res.status(200).send({ ok: true });
 });
-
-// admin
-router.get("/user/:userId", requireSignIn, isAdmin, getSingleUserController);
-router.get("/all-users", requireSignIn, isAdmin, getAllUsersController);
-router.get("/all-documents", requireSignIn, isAdmin, getAllDocumentsController);
-router.put(
-  "/user-status/:userId",
-  requireSignIn,
-  isAdmin,
-  userStatusController
-);
-
-// user
-router.post(
-  "/upload",
-  requireSignIn,
-  isApproved,
-  upload.single("uploadedFile"),
-  uploadController
-);
-router.get(
-  "/documents/:userId",
-  requireSignIn,
-  isApproved,
-  getAllDocumentsUserController
-);
 
 export default router;

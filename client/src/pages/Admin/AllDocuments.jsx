@@ -16,7 +16,7 @@ const AllDocuments = () => {
   const getDocuments = async () => {
     try {
       const { data } = await axios.get(
-        "http://localhost:8080/api/auth/all-documents"
+        "http://localhost:8080/api/admin/all-documents"
       );
       setDocs(data);
       setLoading(false); // Set loading to false after fetching data

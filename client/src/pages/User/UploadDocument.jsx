@@ -124,7 +124,7 @@ const UploadDocument = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8080/api/auth/upload",
+        "http://localhost:8080/api/user/upload",
         formData
       );
 

@@ -15,7 +15,7 @@ export default function ActionAreaCard(user) {
   const reloadCard = async (userId) => {
     try {
       const { data } = await axios.get(
-        `http://localhost:8080/api/auth/user/${userId}`
+        `http://localhost:8080/api/admin/user/${userId}`
       );
       setCurrUser(data);
     } catch (error) {
@@ -26,7 +26,7 @@ export default function ActionAreaCard(user) {
 
   const handleApprove = async (userId) => {
     try {
-      await axios.put(`http://localhost:8080/api/auth/user-status/${userId}`, {
+      await axios.put(`http://localhost:8080/api/admin/user-status/${userId}`, {
         status: "Approved",
       });
       // toast.success("User approved successfully.");
