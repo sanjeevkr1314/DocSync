@@ -3,8 +3,9 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import UserMenu from "../../components/Layout/UserMenu";
 import { useAuth } from "../../context/auth";
-import DriveFileRenameOutlineOutlinedIcon from "@mui/icons-material/DriveFileRenameOutlineOutlined";
-import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
+import { Button } from "@mui/material";
+import DeleteModal from "../../components/DeleteModal";
+import EditModal from "../../components/EditModal";
 
 const YourDocuments = () => {
   const [docs, setDocs] = useState([]);
@@ -24,14 +25,6 @@ const YourDocuments = () => {
     }
   };
 
-  const handleEdit = () => {
-    console.log("Edit");
-  };
-
-  const handleDelete = () => {
-    console.log("Delete");
-  };
-
   useEffect(() => {
     if (userStatus !== "Approved") navigate("/dashboard/user");
     if (auth?.token) getDocuments();
@@ -49,13 +42,42 @@ const YourDocuments = () => {
             <table className="table table-hover">
               <thead>
                 <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">File Name</th>
-                  <th scope="col">Edit</th>
-                  <th scope="col">Delete</th>
-                  <th scope="col">File Type</th>
-                  <th scope="col">Upload Date</th>
-                  <th scope="col">Description</th>
+                  <th
+                    style={{ backgroundColor: "#3f515a", color: "white" }}
+                    scope="col"
+                  >
+                    #
+                  </th>
+                  <th
+                    style={{ backgroundColor: "#3f515a", color: "white" }}
+                    scope="col"
+                  >
+                    File Name
+                  </th>
+                  <th
+                    style={{ backgroundColor: "#3f515a", color: "white" }}
+                    scope="col"
+                  >
+                    File Type
+                  </th>
+                  <th
+                    style={{ backgroundColor: "#3f515a", color: "white" }}
+                    scope="col"
+                  >
+                    Upload Date
+                  </th>
+                  <th
+                    style={{ backgroundColor: "#3f515a", color: "white" }}
+                    scope="col"
+                  >
+                    Description
+                  </th>
+                  <th
+                    style={{ backgroundColor: "#3f515a", color: "white" }}
+                    scope="col"
+                  >
+                    Action
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -63,27 +85,36 @@ const YourDocuments = () => {
                   return (
                     <tr key={i + 1}>
                       <th scope="row">{i + 1}</th>
-                      <td>
-                        <a
-                          href={doc?.file?.secure_url}
-                          target="_blank"
-                          rel="noreferrer"
-                          style={{ color: "#2087fa", textDecoration: "none"}}
-                        >
-                          {doc?.name}
-                        </a>
-                      </td>
-                      <td>
-                        <DriveFileRenameOutlineOutlinedIcon onClick={handleEdit} sx={{ color: "#686c70" }} />
-                      </td>
-                      <td>
-                        <DeleteForeverOutlinedIcon onClick={handleDelete} sx={{ color: "#f06566" }}/>
-                      </td>
+                      <td>{doc?.name}</td>
                       <td>{doc?.file?.format?.toUpperCase() || "N/A"} </td>
                       <td>
                         {new Date(doc?.createdAt).toLocaleDateString("en-GB")}
                       </td>
                       <td>{doc?.desc}</td>
+                      <td>
+                        <div style={{ display: "flex" }}>
+                          <Button
+                            size="small"
+                            variant="contained"
+                            style={{
+                              backgroundColor: "#018588",
+                              width: "20px",
+                              margin: "3px",
+                            }}
+                          >
+                            <a
+                              href={doc?.file?.secure_url}
+                              target="_blank"
+                              rel="noreferrer"
+                              style={{ color: "white", textDecoration: "none" }}
+                            >
+                              View
+                            </a>
+                          </Button>
+                          <EditModal docId={doc?._id} />
+                          <DeleteModal docId={doc?._id} />
+                        </div>
+                      </td>
                     </tr>
                   );
                 })}

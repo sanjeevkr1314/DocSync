@@ -128,7 +128,7 @@ const UploadDocument = () => {
         formData
       );
 
-      console.log(response);
+      // console.log(response);
       const data = await response.data;
 
       if (data.success) {

@@ -1,5 +1,8 @@
 import Document from "../models/docModel.js";
-import uploadOnCloudinary from "../config/cloudinary.js";
+import {
+  uploadOnCloudinary,
+  deleteFromCloudinary,
+} from "../config/cloudinary.js";
 
 // get all documents
 export const getAllDocumentsUserController = async (req, res) => {
@@ -48,6 +51,62 @@ export const uploadController = async (req, res) => {
       res.status(500).json({
         success: false,
         message: "Error uploading file to Cloudinary",
+        error: error.message,
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Internal Server Error",
+      error: error.message,
+    });
+  }
+};
+
+// update document
+export const updateDocumentController = async (req, res) => {
+  try {
+    const doc = await Document.findOneAndUpdate(
+      { _id: req.params.documentId },
+      {
+        name: req.body.name,
+        desc: req.body.desc,
+      },
+      { new: true }
+    );
+    res.status(200).json({
+      success: true,
+      message: "Document updated successfully",
+      doc: doc,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Internal Server Error",
+      error: error.message,
+    });
+  }
+};
+
+// delete document
+export const deleteDocumentController = async (req, res) => {
+  try {
+    const docToDelete = await Document.findById(req.params.documentId);
+    const publicId = docToDelete.file.public_id;
+    const response = await deleteFromCloudinary(publicId);
+    // console.log(response);
+
+    if (response.result === "ok") {
+      const doc = await Document.findByIdAndDelete(req.params.documentId);
+      res.status(200).json({
+        success: true,
+        message: "Document deleted successfully",
+        doc: doc,
+      });
+    } else {
+      res.status(500).json({
+        success: false,
+        message: "Error deleting file from Cloudinary",
         error: error.message,
       });
     }
