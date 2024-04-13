@@ -37,7 +37,7 @@ const YourDocuments = () => {
           {userStatus === "Approved" && <UserMenu id="3" />}{" "}
         </div>
         <div className="user_docs_right">
-          <h3>Your Documents</h3>
+          <h3 className="text-center">Your Documents</h3>
           <div className="border shadow">
             <table className="table table-hover">
               <thead>

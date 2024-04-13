@@ -40,7 +40,7 @@ const AdminMenu = (props) => {
               className="user_menu_nav"
               style={props.id === "3" ? { color: "white" } : {}}
             >
-              Recent Docs
+              All Docs
             </NavLink>
           </div>
         </div>

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import AdminMenu from "../../components/Layout/AdminMenu";
 import { useAuth } from "../../context/auth";
+import { Button } from "@mui/material";
 
 const AllDocuments = () => {
   const [docs, setDocs] = useState([]);
@@ -39,7 +40,7 @@ const AllDocuments = () => {
           <AdminMenu id="3" />
         </div>
         <div className="col-md-9">
-          <h1 className="text-center">All Documents</h1>
+          <h3 className="text-center">All Documents</h3>
 
           {loading && <h4 className="text-center my-4">Loading...</h4>}
           {error && <div className="alert alert-danger">{error}</div>}
@@ -48,12 +49,48 @@ const AllDocuments = () => {
               <table className="table">
                 <thead>
                   <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">File Type</th>
-                    <th scope="col">Owner</th>
-                    <th scope="col">Date of Upload</th>
-                    <th scope="col">Description</th>
+                    <th
+                      style={{ backgroundColor: "#3f515a", color: "white" }}
+                      scope="col"
+                    >
+                      #
+                    </th>
+                    <th
+                      style={{ backgroundColor: "#3f515a", color: "white" }}
+                      scope="col"
+                    >
+                      Name
+                    </th>
+                    <th
+                      style={{ backgroundColor: "#3f515a", color: "white" }}
+                      scope="col"
+                    >
+                      File Type
+                    </th>
+                    <th
+                      style={{ backgroundColor: "#3f515a", color: "white" }}
+                      scope="col"
+                    >
+                      Owner
+                    </th>
+                    <th
+                      style={{ backgroundColor: "#3f515a", color: "white" }}
+                      scope="col"
+                    >
+                      Date of Upload
+                    </th>
+                    <th
+                      style={{ backgroundColor: "#3f515a", color: "white" }}
+                      scope="col"
+                    >
+                      Description
+                    </th>
+                    <th
+                      style={{ backgroundColor: "#3f515a", color: "white" }}
+                      scope="col"
+                    >
+                      Action
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -61,21 +98,35 @@ const AllDocuments = () => {
                     return (
                       <tr key={i + 1}>
                         <th scope="row">{i + 1}</th>
-                        <td>
-                          <a
-                            href={doc?.file?.secure_url}
-                            target="_blank"
-                            rel="noreferrer"
-                          >
-                            {doc?.name}
-                          </a>
-                        </td>
-                        <td>{doc?.file?.format?.toUpperCase() || 'N/A' } </td>
+                        <td>{doc?.name}</td>
+                        <td>{doc?.file?.format?.toUpperCase() || "N/A"} </td>
                         <td>{JSON.parse(doc?.owner).email}</td>
                         <td>
                           {new Date(doc?.createdAt).toLocaleDateString("en-GB")}
                         </td>
                         <td>{doc?.desc}</td>
+                        <td>
+                          <a
+                            href={doc?.file?.secure_url}
+                            target="_blank"
+                            rel="noreferrer"
+                            onClick={(e) => {
+                              // Prevent the default behavior of the link
+                              e.preventDefault();
+                              // Open the link in a new tab/window
+                              window.open(doc?.file?.secure_url, "_blank");
+                            }}
+                            style={{
+                              backgroundColor: "#018588",
+                              padding: "5px 15px 5px 15px",
+                              color: "white",
+                              textDecoration: "none",
+                              borderRadius: "5px",
+                            }}
+                          >
+                            View
+                          </a>
+                        </td>
                       </tr>
                     );
                   })}
