@@ -39,7 +39,7 @@ export default function ActionAreaCard(user) {
 
   const handleCancel = async (userId) => {
     try {
-      await axios.put(`http://localhost:8080/api/auth/user-status/${userId}`, {
+      await axios.put(`http://localhost:8080/api/admin/user-status/${userId}`, {
         status: "Cancelled",
       });
       // toast.success("User status cancelled successfully.");
@@ -52,7 +52,7 @@ export default function ActionAreaCard(user) {
 
   return (
     <Card sx={{ width: 250, margin: "20px", flexDirection: "column" }}>
-      <CardActionArea disableRipple>
+      {/* <CardActionArea disableRipple> */}
         <CardMedia
           component="img"
           height="200rm"
@@ -141,7 +141,7 @@ export default function ActionAreaCard(user) {
             </div>
           )}
         </CardContent>
-      </CardActionArea>
+      {/* </CardActionArea> */}
       {/* <ToastContainer /> */}
     </Card>
   );

@@ -45,8 +45,8 @@ const AllUsers = () => {
             {error && <div className="alert alert-danger">{error}</div>}
             {!loading && !error && (
               <div className="all-users-container">
-                {users?.map((user) => (
-                  <UserCard {...user} />
+                {users?.map((user, i) => (
+                  <UserCard key={i} {...user} />
                 ))}
               </div>
             )}
