@@ -6,6 +6,7 @@ import authRoute from "./routes/authRoute.js";
 import otpRoute from "./routes/otpRoute.js";
 import userRoute from "./routes/userRoute.js";
 import adminRoute from "./routes/adminRoute.js";
+import sysAdminRoute from "./routes/sysAdminRoute.js";
 
 dotenv.config();
 const app = express();
@@ -22,6 +23,7 @@ app.use("/api/auth", authRoute);
 app.use("/api/otp", otpRoute);
 app.use("/api/user", userRoute);
 app.use("/api/admin", adminRoute);
+app.use("/api/sadmin", sysAdminRoute);
 
 //rest api
 app.get("/", (req, res) => {

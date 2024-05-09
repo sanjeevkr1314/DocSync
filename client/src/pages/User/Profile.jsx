@@ -5,10 +5,12 @@ import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const [auth] = useAuth();
+  const userRole = auth?.user?.role;
   const navigate = useNavigate();
 
   useEffect(() => {
     if (!auth?.token) navigate("/login");
+    if (userRole !== 0) navigate("/dashboard");
   }, [auth?.token]);
 
   return (

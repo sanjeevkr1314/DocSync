@@ -6,6 +6,7 @@ import {
 } from "../controllers/authController.js";
 import {
   isAdmin,
+  isSysAdmin,
   requireSignIn
 } from "../middlewares/authMiddlewares.js";
 
@@ -24,6 +25,11 @@ router.get("/user-auth", requireSignIn, (req, res) => {
 
 //protected Admin route auth (helps in frontend private routes)
 router.get("/admin-auth", requireSignIn, isAdmin, (req, res) => {
+  res.status(200).send({ ok: true });
+});
+
+//protected System Admin route auth (helps in frontend private routes)
+router.get("/sadmin-auth", requireSignIn, isSysAdmin, (req, res) => {
   res.status(200).send({ ok: true });
 });
 

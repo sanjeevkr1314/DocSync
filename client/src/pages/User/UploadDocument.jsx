@@ -40,6 +40,7 @@ const UploadDocument = () => {
 
   const [auth] = useAuth();
   const navigate = useNavigate();
+  const userRole = auth?.user?.role;
   const [admins, setAdmins] = useState([]);
 
   const getUserAdmins = async () => {
@@ -57,6 +58,7 @@ const UploadDocument = () => {
   useEffect(() => {
     getUserAdmins();
     if (!auth?.token) navigate("/login");
+    if (userRole !== 0) navigate("/dashboard");
   }, [auth?.token]);
 
   const handleDocumentUpload = (e) => {

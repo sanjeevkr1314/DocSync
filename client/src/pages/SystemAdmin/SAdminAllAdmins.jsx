@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import AdminMenu from "../../components/Layout/AdminMenu";
+import SAdminMenu from "../../components/Layout/SAdminMenu";
 import { useAuth } from "../../context/auth";
-import UserCard from "./UserCard";
+import UserCard from "../Admin/UserCard";
 
-const AllUsers = () => {
+const SysAdminAllAdmins = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -16,7 +16,7 @@ const AllUsers = () => {
   const getUsers = async () => {
     try {
       const { data } = await axios.get(
-        `http://localhost:8080/api/admin/all-users/${auth.user._id}`
+        `http://localhost:8080/api/sadmin/all-admins`
       );
       setUsers(data);
       setLoading(false);
@@ -28,7 +28,7 @@ const AllUsers = () => {
   };
 
   useEffect(() => {
-    if (userRole !== 1) navigate("/dashboard");
+    if (userRole !== 2) navigate("/dashboard");
     if (auth?.token) getUsers();
     if (!auth?.token) navigate("/login");
   }, [auth?.token, userRole]);
@@ -37,7 +37,7 @@ const AllUsers = () => {
     <>
       <div className="row dashboard">
         <div className="col-md-3">
-          <AdminMenu id="2" />
+          <SAdminMenu id="4" />
         </div>
         <div className="col-md-9">
           <h1 className="text-center">All Users</h1>
@@ -58,4 +58,4 @@ const AllUsers = () => {
   );
 };
 
-export default AllUsers;
+export default SysAdminAllAdmins;

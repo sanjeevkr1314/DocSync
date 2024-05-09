@@ -11,6 +11,7 @@ const AdminDashboard = () => {
 
   useEffect(() => {
     if (userRole !== 1) navigate("/dashboard");
+    if (!auth?.token) navigate("/login");
   }, [auth?.token, userRole]);
 
   return (

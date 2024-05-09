@@ -11,6 +11,7 @@ const YourDocuments = () => {
   const [docs, setDocs] = useState([]);
   const [auth] = useAuth();
   const navigate = useNavigate();
+  const userRole = auth?.user?.role;
   const userId = auth?.user?._id;
 
   const getDocuments = async () => {
@@ -27,6 +28,7 @@ const YourDocuments = () => {
   useEffect(() => {
     getDocuments();
     if (!auth?.token) navigate("/login");
+    if (userRole !== 0) navigate("/dashboard");
   }, [auth?.token]);
 
   return (
@@ -75,6 +77,12 @@ const YourDocuments = () => {
                     style={{ backgroundColor: "#3f515a", color: "white" }}
                     scope="col"
                   >
+                    Shared With
+                  </th>
+                  <th
+                    style={{ backgroundColor: "#3f515a", color: "white" }}
+                    scope="col"
+                  >
                     Action
                   </th>
                 </tr>
@@ -90,6 +98,7 @@ const YourDocuments = () => {
                         {new Date(doc?.createdAt).toLocaleDateString("en-GB")}
                       </td>
                       <td>{doc?.desc}</td>
+                      <td>{doc?.sharedWithEmail}</td>
                       <td>
                         <div style={{ display: "flex" }}>
                           <Button

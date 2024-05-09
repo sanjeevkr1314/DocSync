@@ -1,30 +1,31 @@
 import React, { useEffect } from "react";
-import UserMenu from "../../components/Layout/UserMenu";
+import SAdminMenu from "../../components/Layout/SAdminMenu.jsx";
 import { useAuth } from "../../context/auth";
 import { useNavigate } from "react-router-dom";
 
-const UserDashboard = () => {
+const SAdminDashboard = () => {
   const [auth] = useAuth();
   const navigate = useNavigate();
+  // console.log(auth?.user);
   const userRole = auth?.user?.role;
 
   useEffect(() => {
+    if (userRole !== 2) navigate("/dashboard");
     if (!auth?.token) navigate("/login");
-    if (userRole !== 0) navigate("/dashboard");
-  }, [auth?.token]);
+  }, [auth?.token, userRole]);
 
   return (
     <>
       <div>
         <div className="user_dashboard_container">
           <div className="user_dashboard_left">
-            <UserMenu />
+            <SAdminMenu />
           </div>
           <div className="user_dashboard_right">
             <div>
               <h3>
                 {" "}
-                Name : {auth?.user?.fName} {auth?.user?.lName}
+                Coordinator Name : {auth?.user?.fName} {auth?.user?.lName}
               </h3>
               <h3> Email : {auth?.user?.email}</h3>
             </div>
@@ -35,4 +36,4 @@ const UserDashboard = () => {
   );
 };
 
-export default UserDashboard;
+export default SAdminDashboard;

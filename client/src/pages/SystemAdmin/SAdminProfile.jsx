@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import AdminMenu from "../../components/Layout/AdminMenu";
+import SAdminMenu from "../../components/Layout/SAdminMenu";
 import { useAuth } from "../../context/auth";
 import { useNavigate } from "react-router-dom";
 
@@ -10,7 +10,7 @@ const AdminProfile = () => {
   const userRole = auth?.user?.role;
 
   useEffect(() => {
-    if (userRole !== 1) navigate("/dashboard");
+    if (userRole !== 2) navigate("/dashboard");
     if (!auth?.token) navigate("/login");
   }, [auth?.token, userRole]);
 
@@ -18,10 +18,10 @@ const AdminProfile = () => {
     <>
       <div className="user_dashboard_container">
         <div className="user_dashboard_left">
-          <AdminMenu id="1" />
+          <SAdminMenu id="1" />
         </div>
         <div className="user_dashboard_right">
-          <h3>Admin Profile</h3>
+          <h3>Profile</h3>
           <section>
             <div className="container py-5">
               <div className="row">
@@ -38,9 +38,7 @@ const AdminProfile = () => {
                         {auth?.user?.fName + " "}
                         {auth?.user?.lName}
                       </h5>
-                      <p className="text">
-                        {auth?.user?.role === 1 ? "Admin" : "User"}
-                      </p>
+                      <p className="text">Coordinator</p>
                       <p className="text-muted mb-4">
                         Jaipur, Rajasthan, India
                       </p>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import AdminMenu from "../../components/Layout/AdminMenu";
+import SAdminMenu from "../../components/Layout/SAdminMenu";
 import { useAuth } from "../../context/auth";
 
 const AllDocuments = () => {
@@ -16,7 +16,7 @@ const AllDocuments = () => {
   const getDocuments = async () => {
     try {
       const { data } = await axios.get(
-        `http://localhost:8080/api/admin/all-documents/${auth?.user?._id}`
+        `http://localhost:8080/api/sadmin/all-documents`
       );
       setDocs(data);
       setLoading(false); // Set loading to false after fetching data
@@ -28,7 +28,7 @@ const AllDocuments = () => {
   };
 
   useEffect(() => {
-    if (userRole !== 1) navigate("/dashboard");
+    if (userRole !== 2) navigate("/dashboard");
     if (auth?.token) getDocuments();
     if (!auth?.token) navigate("/login");
   }, [auth?.token, userRole]);
@@ -37,7 +37,7 @@ const AllDocuments = () => {
     <>
       <div className="row dashboard">
         <div className="col-md-3">
-          <AdminMenu id="3" />
+          <SAdminMenu id="3" />
         </div>
         <div className="col-md-9">
           <h3 className="text-center">All Documents</h3>

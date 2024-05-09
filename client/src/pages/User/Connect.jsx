@@ -11,6 +11,7 @@ import "react-toastify/dist/ReactToastify.css";
 const Connect = () => {
   const [auth] = useAuth();
   const [admins, setAdmins] = useState([]);
+  const userRole = auth?.user?.role;
   const navigate = useNavigate();
 
   const getAdmins = async () => {
@@ -43,6 +44,7 @@ const Connect = () => {
   useEffect(() => {
     getAdmins();
     if (!auth?.token) navigate("/login");
+    if (userRole !== 0) navigate("/dashboard");
   }, [auth?.token]);
   return (
     <>

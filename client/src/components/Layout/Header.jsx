@@ -48,6 +48,8 @@ const Header = () => {
     localStorage.removeItem("auth");
   };
 
+  const dashboardLink = auth.user?.role === 1 ? "admin" : auth.user?.role === 2 ? "sadmin" : "user";
+
   return (
     <header>
       <nav className="navbar">
@@ -59,7 +61,7 @@ const Header = () => {
           {auth.user ? (
             <>
               <Link
-                to={`/dashboard/${auth?.user?.role === 1 ? "admin" : "user"}`}
+                to={`/dashboard/${dashboardLink}`}
               >
                 <button className="white_btn">Dashboard</button>
               </Link>

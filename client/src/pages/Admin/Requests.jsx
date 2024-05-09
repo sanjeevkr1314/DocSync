@@ -66,6 +66,7 @@ const Requests = () => {
   useEffect(() => {
     if (userRole !== 1) navigate("/dashboard");
     if (auth?.token) getRequests();
+    if (!auth?.token) navigate("/login");
   }, [auth?.token, userRole]);
 
   return (
