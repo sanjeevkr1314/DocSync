@@ -28,7 +28,7 @@ const AdminMenu = (props) => {
               className="user_menu_nav"
               style={props.id === "2" ? { color: "white" } : {}}
             >
-              Users
+              All Users
             </NavLink>
           </div>
           <div

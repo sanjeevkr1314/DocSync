@@ -24,6 +24,7 @@ import SAdminProfile from "./pages/SystemAdmin/SAdminProfile.jsx";
 import SAllDocuments from "./pages/SystemAdmin/SAdminAllDocuments.jsx";
 import SysAdminAllUsers from "./pages/SystemAdmin/SAdminAllUsers.jsx";
 import SysAdminAllAdmins from "./pages/SystemAdmin/SAdminAllAdmins.jsx";
+import SingleUser from "./pages/Admin/SingleUser.jsx";
 
 function App() {
   return (
@@ -43,6 +44,7 @@ function App() {
             <Route path="admin" element={<AdminDashboard />} />
             <Route path="admin/profile" element={<AdminProfile />} />
             <Route path="admin/users" element={<AllUsers />} />
+            <Route path="admin/users/:userId" element={<SingleUser />} />
             <Route path="admin/documents" element={<AllDocuments />} />
             <Route path="admin/requests" element={<Requests />} />
           </Route>

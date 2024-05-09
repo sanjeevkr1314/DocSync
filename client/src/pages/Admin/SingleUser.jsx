@@ -1,24 +1,27 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import AdminMenu from "../../components/Layout/AdminMenu";
 import { useAuth } from "../../context/auth";
 
-const AllDocuments = () => {
+const SingleUser = () => {
   const [docs, setDocs] = useState([]);
+  const [thisUser, setThisUser] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [auth] = useAuth();
   const navigate = useNavigate();
+  const params = useParams();
   // console.log(auth?.user);
   const userRole = auth?.user?.role;
 
-  const getDocuments = async () => {
+  const getSingleUser = async () => {
     try {
       const { data } = await axios.get(
-        `http://localhost:8080/api/admin/all-documents/${auth?.user?._id}`
+        `http://localhost:8080/api/admin/users/${params.userId}`
       );
-      setDocs(data);
+      setThisUser(data.user);
+      setDocs(data.documents);
       setLoading(false); // Set loading to false after fetching data
     } catch (error) {
       console.log(error);
@@ -29,7 +32,7 @@ const AllDocuments = () => {
 
   useEffect(() => {
     if (userRole !== 1) navigate("/dashboard");
-    if (auth?.token) getDocuments();
+    if (auth?.token) getSingleUser();
     if (!auth?.token) navigate("/login");
   }, [auth?.token, userRole]);
 
@@ -37,10 +40,12 @@ const AllDocuments = () => {
     <>
       <div className="row dashboard">
         <div className="col-md-3">
-          <AdminMenu id="3" />
+          <AdminMenu id="2" />
         </div>
         <div className="col-md-9">
-          <h3 className="text-center">All Documents</h3>
+          <h3 className="text-center">
+            All Users {`>`} {thisUser.email}{" "}
+          </h3>
 
           {loading && <h4 className="text-center my-4">Loading...</h4>}
           {error && <div className="alert alert-danger">{error}</div>}
@@ -71,12 +76,6 @@ const AllDocuments = () => {
                       style={{ backgroundColor: "#3f515a", color: "white" }}
                       scope="col"
                     >
-                      Shared By
-                    </th>
-                    <th
-                      style={{ backgroundColor: "#3f515a", color: "white" }}
-                      scope="col"
-                    >
                       Date of Upload
                     </th>
                     <th
@@ -100,7 +99,6 @@ const AllDocuments = () => {
                         <th scope="row">{i + 1}</th>
                         <td>{doc?.name}</td>
                         <td>{doc?.file?.format?.toUpperCase() || "N/A"} </td>
-                        <td>{JSON.parse(doc?.owner).email}</td>
                         <td>
                           {new Date(doc?.createdAt).toLocaleDateString("en-GB")}
                         </td>
@@ -140,4 +138,4 @@ const AllDocuments = () => {
   );
 };
 
-export default AllDocuments;
+export default SingleUser;

@@ -25,23 +25,19 @@ export default function ActionAreaCard(user) {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-evenly",
-          cursor: "default",
         }}
       >
         <Typography
           gutterBottom
           variant="h6"
           component="div"
-          style={{
-            display: "flex",
-            justifyContent: "center",
-          }}
+          sx={{ textAlign: "center", textDecoration: "none" }}
         >
           {currUser?.firstName} {currUser?.lastName}
         </Typography>
 
         <Typography
-          sx={{ display: "flex", justifyContent: "center" }}
+          sx={{ display: "flex", justifyContent: "center" , textDecoration: "none"}}
           variant="body2"
         >
           {currUser?.email}

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import AdminMenu from "../../components/Layout/AdminMenu";
 import { useAuth } from "../../context/auth";
@@ -47,7 +47,9 @@ const AllUsers = () => {
             {!loading && !error && (
               <div className="all-users-container">
                 {users?.map((user, i) => (
-                  <UserCard key={i} {...user} />
+                  <Link key={i} to={`/dashboard/admin/users/${user?._id}`}>
+                    <UserCard {...user} />
+                  </Link>
                 ))}
               </div>
             )}

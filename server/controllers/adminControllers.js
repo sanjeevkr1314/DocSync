@@ -6,7 +6,18 @@ export const getSingleUserController = async (req, res) => {
   try {
     const { userId } = req.params;
     const user = await User.findById(userId);
-    res.json(user);
+    const response = {};
+    response.user = {
+      _id: user._id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email
+    };
+    response.documents = await Document.find({ 
+      ownerId: userId,
+      sharedWithId: req.user._id
+    }).sort({ createdAt: "-1" });
+    res.json(response);
   } catch (error) {
     console.log(error);
     res.status(500).send({
@@ -33,27 +44,6 @@ export const getAllUsersController = async (req, res) => {
     res.status(500).send({
       success: false,
       message: "Error while fetching users",
-      error,
-    });
-  }
-};
-
-// user status controller
-export const userStatusController = async (req, res) => {
-  try {
-    const { userId } = req.params;
-    const { status } = req.body;
-    const users = await User.findByIdAndUpdate(
-      userId,
-      { status },
-      { new: true }
-    );
-    res.json(users);
-  } catch (error) {
-    console.log(error);
-    res.status(500).send({
-      success: false,
-      message: "Error While Updating User",
       error,
     });
   }

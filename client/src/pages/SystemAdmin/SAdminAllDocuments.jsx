@@ -77,6 +77,12 @@ const AllDocuments = () => {
                       style={{ backgroundColor: "#3f515a", color: "white" }}
                       scope="col"
                     >
+                      Shared With
+                    </th>
+                    <th
+                      style={{ backgroundColor: "#3f515a", color: "white" }}
+                      scope="col"
+                    >
                       Date of Upload
                     </th>
                     <th
@@ -101,6 +107,7 @@ const AllDocuments = () => {
                         <td>{doc?.name}</td>
                         <td>{doc?.file?.format?.toUpperCase() || "N/A"} </td>
                         <td>{JSON.parse(doc?.owner).email}</td>
+                        <td>{doc?.sharedWithEmail}</td>
                         <td>
                           {new Date(doc?.createdAt).toLocaleDateString("en-GB")}
                         </td>
