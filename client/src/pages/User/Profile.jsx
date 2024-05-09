@@ -41,17 +41,6 @@ const Profile = () => {
                       <p className="text-muted mb-4">
                         Jaipur, Rajasthan, India
                       </p>
-                      <div className="d-flex justify-content-center mb-2">
-                        <button type="button" className="btn btn-primary">
-                          Follow
-                        </button>
-                        <button
-                          type="button"
-                          className="btn btn-outline-primary ms-1"
-                        >
-                          Message
-                        </button>
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -84,7 +73,7 @@ const Profile = () => {
                           <p className="mb-0">Mobile</p>
                         </div>
                         <div className="col-sm-9">
-                          <p className="text-muted mb-0">(098) 765-4321</p>
+                          <p className="text-muted mb-0">N/A</p>
                         </div>
                       </div>
                       <hr />

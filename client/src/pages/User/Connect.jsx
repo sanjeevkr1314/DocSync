@@ -16,7 +16,7 @@ const Connect = () => {
   const getAdmins = async () => {
     try {
       const { data } = await axios.get(
-        `http://localhost:8080/api/user/all-admins`
+        `http://localhost:8080/api/user/all-admins/${auth?.user?._id}`
       );
       setAdmins(data);
     } catch (error) {
@@ -33,6 +33,7 @@ const Connect = () => {
           adminId,
         }
       );
+      getAdmins();
       toast.success(data.message);
     } catch (error) {
       console.log(error);

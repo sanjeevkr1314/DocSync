@@ -21,7 +21,7 @@ router.post(
   upload.single("uploadedFile"),
   uploadController
 );
-router.get("/all-admins", requireSignIn, getAllAdminsController);
+router.get("/all-admins/:userId", requireSignIn, getAllAdminsController);
 router.get("/my-admins/:userId", requireSignIn, getMyAdminsController);
 router.post("/connect-admin", requireSignIn, connectAdminController);
 router.get(

@@ -30,7 +30,7 @@ const UploadDocument = () => {
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
-  const [selectedAdmin, setSelectedAdmin] = useState({id: "", email: ""});
+  const [selectedAdmin, setSelectedAdmin] = useState({ id: "", email: "" });
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -133,6 +133,11 @@ const UploadDocument = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    // Check if an admin is selected
+    if (!selectedAdmin.email) {
+      toast.error("Please select an admin");
+      return;
+    }
     setUploadState("Uploading....");
 
     if (isError) return;
@@ -196,6 +201,7 @@ const UploadDocument = () => {
                 <div className="dropdown">
                   <Button
                     id="demo-customized-button"
+                    sx={{ color: "white", backgroundColor: "#3f515a" }}
                     aria-controls={open ? "demo-customized-menu" : undefined}
                     aria-haspopup="true"
                     aria-expanded={open ? "true" : undefined}
@@ -204,7 +210,9 @@ const UploadDocument = () => {
                     onClick={handleClick}
                     endIcon={<KeyboardArrowDownIcon />}
                   >
-                    {selectedAdmin.email ? selectedAdmin?.email : "Select Admin"}
+                    {selectedAdmin.email
+                      ? selectedAdmin?.email
+                      : "Select Admin"}
                   </Button>
                   <Menu
                     id="long-menu"
@@ -219,7 +227,10 @@ const UploadDocument = () => {
                       <MenuItem
                         key={admin.email}
                         onClick={() => {
-                          setSelectedAdmin({ id: admin._id, email: admin.email });
+                          setSelectedAdmin({
+                            id: admin._id,
+                            email: admin.email,
+                          });
                           handleClose();
                         }}
                       >

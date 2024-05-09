@@ -25,7 +25,14 @@ export const getAllDocumentsUserController = async (req, res) => {
 // get all admins
 export const getAllAdminsController = async (req, res) => {
   try {
-    const admins = await User.find({ role: 1 });
+    const userId = req.params.userId;
+    const user = await User.findById(userId);
+    const admins = await User.find({
+      role: 1,
+      _id: {
+        $nin: [...user.yourAdmins, ...user.connectionRequestsSent], // Exclude admins in yourAdmins and connectionRequestsSent
+      },
+    });
     res.json(admins);
   } catch (error) {
     console.log(error);
@@ -66,6 +73,7 @@ export const connectAdminController = async (req, res) => {
       admin.connectionRequestsReceived.push(user._id);
       user.connectionRequestsSent.push(admin._id);
       await admin.save();
+      await user.save();
       res.json({
         success: true,
         message: "Connection request sent successfully",
