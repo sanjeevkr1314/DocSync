@@ -26,6 +26,11 @@
   padding: 1rem;
 }
 
+.card-body .dropdown {
+  margin-bottom: 20px;
+  margin-left: 20px;
+}
+
 input[type="file"] {
   width: 20rem;
   font-size: 1rem;

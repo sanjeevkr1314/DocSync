@@ -28,7 +28,7 @@ const AdminMenu = (props) => {
               className="user_menu_nav"
               style={props.id === "2" ? { color: "white" } : {}}
             >
-              All Users
+              Users
             </NavLink>
           </div>
           <div
@@ -43,38 +43,22 @@ const AdminMenu = (props) => {
               All Docs
             </NavLink>
           </div>
+          <div
+            className="user_menu_navlink"
+            style={props.id === "4" ? { backgroundColor: "#0d6efd" } : {}}
+          >
+            <NavLink
+              to="/dashboard/admin/requests"
+              className="user_menu_nav"
+              style={props.id === "4" ? { color: "white" } : {}}
+            >
+              Requests
+            </NavLink>
+          </div>
         </div>
       </div>
     </>
   );
-
-  // return (
-  //   <>
-  //     <div className="text-center">
-  //       <div className="list-group dashboard-menu">
-  //         <h4>Admin Panel</h4>
-  //         <NavLink
-  //           to="/dashboard/admin/profile"
-  //           className="list-group-item list-group-item-action"
-  //         >
-  //           Profile
-  //         </NavLink>
-  //         <NavLink
-  //           to="/dashboard/admin/users"
-  //           className="list-group-item list-group-item-action"
-  //         >
-  //           All Users
-  //         </NavLink>
-  //         <NavLink
-  //           to="/dashboard/admin/documents"
-  //           className="list-group-item list-group-item-action"
-  //         >
-  //           All documents
-  //         </NavLink>
-  //       </div>
-  //     </div>
-  //   </>
-  // );
 };
 
 export default AdminMenu;

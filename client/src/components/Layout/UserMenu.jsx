@@ -36,6 +36,15 @@ const UserMenu = (props) => {
               Your documents
             </NavLink>
           </div>
+          <div className="user_menu_navlink" style={props.id === "4" ? {backgroundColor: "#0d6efd"} : {}}>
+            <NavLink
+              to="/dashboard/user/connect"
+              className="user_menu_nav"
+              style={props.id === "4" ? {color: "white"} :{}}
+            >
+              Connect
+            </NavLink>
+          </div>
         </div>
       </div>
     </>

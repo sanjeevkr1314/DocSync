@@ -16,7 +16,7 @@ const AllUsers = () => {
   const getUsers = async () => {
     try {
       const { data } = await axios.get(
-        "http://localhost:8080/api/admin/all-users"
+        `http://localhost:8080/api/admin/all-users/${auth.user._id}`
       );
       setUsers(data);
       setLoading(false);

@@ -11,7 +11,6 @@ const YourDocuments = () => {
   const [docs, setDocs] = useState([]);
   const [auth] = useAuth();
   const navigate = useNavigate();
-  const userStatus = auth?.user?.status;
   const userId = auth?.user?._id;
 
   const getDocuments = async () => {
@@ -26,15 +25,15 @@ const YourDocuments = () => {
   };
 
   useEffect(() => {
-    if (userStatus !== "Approved") navigate("/dashboard/user");
-    if (auth?.token) getDocuments();
-  }, [auth?.token, userStatus]);
+    getDocuments();
+    if (!auth?.token) navigate("/login");
+  }, [auth?.token]);
 
   return (
     <>
       <div className="user_dashboard_container">
         <div className="user_dashboard_left">
-          {userStatus === "Approved" && <UserMenu id="3" />}{" "}
+          <UserMenu id="3" />
         </div>
         <div className="user_docs_right">
           <h3 className="text-center">Your Documents</h3>

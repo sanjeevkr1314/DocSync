@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import AdminMenu from "../../components/Layout/AdminMenu";
 import { useAuth } from "../../context/auth";
-import { Button } from "@mui/material";
 
 const AllDocuments = () => {
   const [docs, setDocs] = useState([]);
@@ -17,7 +16,7 @@ const AllDocuments = () => {
   const getDocuments = async () => {
     try {
       const { data } = await axios.get(
-        "http://localhost:8080/api/admin/all-documents"
+        `http://localhost:8080/api/admin/all-documents/${auth?.user?._id}`
       );
       setDocs(data);
       setLoading(false); // Set loading to false after fetching data

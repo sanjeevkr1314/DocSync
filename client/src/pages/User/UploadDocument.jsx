@@ -10,6 +10,10 @@ import "@react-pdf-viewer/core/lib/styles/index.css";
 import "@react-pdf-viewer/default-layout/lib/styles/index.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import Button from "@mui/material/Button";
 
 const UploadDocument = () => {
   const [isError, setIsError] = useState(false);
@@ -24,13 +28,36 @@ const UploadDocument = () => {
   const [fileType, setFileType] = useState("");
   const [desc, setDesc] = useState("");
 
-  const [auth, setAuth] = useAuth();
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const [selectedAdmin, setSelectedAdmin] = useState({id: "", email: ""});
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const [auth] = useAuth();
   const navigate = useNavigate();
-  const userStatus = auth?.user?.status;
+  const [admins, setAdmins] = useState([]);
+
+  const getUserAdmins = async () => {
+    try {
+      const { data } = await axios.get(
+        `http://localhost:8080/api/user/my-admins/${auth?.user?._id}`
+      );
+      setAdmins(data);
+      // console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
-    if (userStatus !== "Approved") navigate("/dashboard/user");
-  }, [auth?.token, userStatus]);
+    getUserAdmins();
+    if (!auth?.token) navigate("/login");
+  }, [auth?.token]);
 
   const handleDocumentUpload = (e) => {
     const selectedFile = e.target.files[0];
@@ -118,6 +145,8 @@ const UploadDocument = () => {
     formData.append("fileType", fileType);
     formData.append("name", name);
     formData.append("desc", desc);
+    formData.append("adminEmail", selectedAdmin.email);
+    formData.append("adminId", selectedAdmin.id);
 
     const owner = JSON.stringify(auth?.user);
     formData.append("owner", owner);
@@ -150,7 +179,7 @@ const UploadDocument = () => {
     <>
       <div className="user_dashboard_container">
         <div className="user_dashboard_left">
-          {userStatus === "Approved" && <UserMenu id="2" />}{" "}
+          <UserMenu id="2" />{" "}
         </div>
         <div className="user_dashboard_right">
           <div className="card" style={{ margin: "10px 0px 0px 100px" }}>
@@ -161,8 +190,44 @@ const UploadDocument = () => {
                 are allowed.
               </p>
             </div>
+
             <div className="card-body">
               <form onSubmit={handleSubmit} encType="multipart/form-data">
+                <div className="dropdown">
+                  <Button
+                    id="demo-customized-button"
+                    aria-controls={open ? "demo-customized-menu" : undefined}
+                    aria-haspopup="true"
+                    aria-expanded={open ? "true" : undefined}
+                    variant="contained"
+                    disableElevation
+                    onClick={handleClick}
+                    endIcon={<KeyboardArrowDownIcon />}
+                  >
+                    {selectedAdmin.email ? selectedAdmin?.email : "Select Admin"}
+                  </Button>
+                  <Menu
+                    id="long-menu"
+                    MenuListProps={{
+                      "aria-labelledby": "long-button",
+                    }}
+                    anchorEl={anchorEl}
+                    open={open}
+                    onClose={handleClose}
+                  >
+                    {admins.map((admin) => (
+                      <MenuItem
+                        key={admin.email}
+                        onClick={() => {
+                          setSelectedAdmin({ id: admin._id, email: admin.email });
+                          handleClose();
+                        }}
+                      >
+                        {admin.email}
+                      </MenuItem>
+                    ))}
+                  </Menu>
+                </div>
                 <input
                   type="file"
                   accept="application/pdf, image/jpg, image/jpeg, image/png"

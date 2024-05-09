@@ -1,22 +1,21 @@
 import React, { useEffect } from "react";
 import { useAuth } from "../../context/auth";
-import { useNavigate } from "react-router-dom";
 import UserMenu from "../../components/Layout/UserMenu";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
-  const [auth, setAuth] = useAuth();
+  const [auth] = useAuth();
   const navigate = useNavigate();
-  const userStatus = auth?.user?.status;
 
   useEffect(() => {
-    if (userStatus !== "Approved") navigate("/dashboard/user");
-  }, [auth?.token, userStatus]);
+    if (!auth?.token) navigate("/login");
+  }, [auth?.token]);
 
   return (
     <>
       <div className="user_dashboard_container">
         <div className="user_dashboard_left">
-          {userStatus === "Approved" && <UserMenu id="1" />}{" "}
+          <UserMenu id="1" />{" "}
         </div>
         <div className="user_dashboard_right">
           <h3>User Profile</h3>

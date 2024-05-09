@@ -1,15 +1,15 @@
 import express from "express";
 import { upload } from "../middlewares/multer.middleware.js";
 import {
+  connectAdminController,
   deleteDocumentController,
+  getAllAdminsController,
   getAllDocumentsUserController,
+  getMyAdminsController,
   updateDocumentController,
   uploadController,
 } from "../controllers/userControllers.js";
-import {
-  requireSignIn,
-  isApproved,
-} from "../middlewares/authMiddlewares.js";
+import { requireSignIn } from "../middlewares/authMiddlewares.js";
 
 //router object
 const router = express.Router();
@@ -18,26 +18,25 @@ const router = express.Router();
 router.post(
   "/upload",
   requireSignIn,
-  isApproved,
   upload.single("uploadedFile"),
   uploadController
 );
+router.get("/all-admins", requireSignIn, getAllAdminsController);
+router.get("/my-admins/:userId", requireSignIn, getMyAdminsController);
+router.post("/connect-admin", requireSignIn, connectAdminController);
 router.get(
   "/documents/:userId",
   requireSignIn,
-  isApproved,
   getAllDocumentsUserController
 );
 router.patch(
   "/documents/:documentId",
   requireSignIn,
-  isApproved,
   updateDocumentController
 );
 router.delete(
   "/documents/:documentId",
   requireSignIn,
-  isApproved,
   deleteDocumentController
 );
 

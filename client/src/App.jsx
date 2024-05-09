@@ -16,6 +16,8 @@ import YourDocuments from "./pages/User/YourDocuments";
 import Footer from "./components/Layout/Footer.jsx";
 import AdminProfile from "./pages/Admin/AdminProfile.jsx";
 import ForgotPassword from "./pages/Auth/ForgotPassword.jsx";
+import Requests from "./pages/Admin/Requests.jsx";
+import Connect from "./pages/User/Connect.jsx";
 
 function App() {
   return (
@@ -29,12 +31,14 @@ function App() {
             <Route path="user/profile" element={<Profile />} />
             <Route path="user/upload-document" element={<UploadDocument />} />
             <Route path="user/documents" element={<YourDocuments />} />
+            <Route path="user/connect" element={<Connect />} />
           </Route>
           <Route path="/dashboard" element={<AdminRoute />}>
             <Route path="admin" element={<AdminDashboard />} />
             <Route path="admin/profile" element={<AdminProfile />} />
             <Route path="admin/users" element={<AllUsers />} />
             <Route path="admin/documents" element={<AllDocuments />} />
+            <Route path="admin/requests" element={<Requests />} />
           </Route>
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />

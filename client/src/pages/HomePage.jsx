@@ -3,7 +3,7 @@ import { useAuth } from "../context/auth";
 import logo from "../images/home-page-image.avif";
 
 const HomePage = () => {
-  const [auth, setAuth] = useAuth();
+  const [auth] = useAuth();
 
   return (
     <div className="home_page">

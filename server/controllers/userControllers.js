@@ -1,4 +1,5 @@
 import Document from "../models/docModel.js";
+import User from "../models/userModel.js";
 import {
   uploadOnCloudinary,
   deleteFromCloudinary,
@@ -21,6 +22,71 @@ export const getAllDocumentsUserController = async (req, res) => {
   }
 };
 
+// get all admins
+export const getAllAdminsController = async (req, res) => {
+  try {
+    const admins = await User.find({ role: 1 });
+    res.json(admins);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Error while fetching admins",
+      error,
+    });
+  }
+};
+
+// get my admins
+export const getMyAdminsController = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.userId);
+    const admins = [];
+    for (let i = 0; i < user.yourAdmins.length; i++) {
+      const admin = await User.findById(user.yourAdmins[i]);
+      admins.push(admin);
+    }
+    res.json(admins);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Error while fetching my admins",
+      error,
+    });
+  }
+};
+
+// connect admin
+export const connectAdminController = async (req, res) => {
+  try {
+    const user = await User.findById(req.body.userId);
+    const admin = await User.findById(req.body.adminId);
+    if (admin && user) {
+      admin.connectionRequestsReceived.push(user._id);
+      user.connectionRequestsSent.push(admin._id);
+      await admin.save();
+      res.json({
+        success: true,
+        message: "Connection request sent successfully",
+        user,
+      });
+    } else {
+      res.status(404).json({
+        success: false,
+        message: "Admin not found",
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Error while connecting admin",
+      error,
+    });
+  }
+};
+
 // upload file
 export const uploadController = async (req, res) => {
   try {
@@ -34,6 +100,8 @@ export const uploadController = async (req, res) => {
       const document = new Document({
         owner: req.body.owner,
         ownerId: ownerid,
+        sharedWithId: req.body.adminId,
+        sharedWithEmail: req.body.adminEmail,
         fileType: req.body.fileType,
         name: req.body.name,
         desc: req.body.desc,

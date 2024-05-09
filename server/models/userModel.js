@@ -8,10 +8,21 @@ const userSchema = new mongoose.Schema(
     email: { type: String, required: true },
     password: { type: String, required: true },
     role: { type: Number, default: 0 },
-    status: {
-      type: String,
-      default: "Not Processed",
-      enum: ["Not Processed", "Approved", "Cancelled"],
+    yourAdmins: {
+      type: Array,
+      default: [],
+    },
+    yourUsers: {
+      type: Array,
+      default: [],
+    },
+    connectionRequestsSent: {
+      type: Array,
+      default: [],
+    },
+    connectionRequestsReceived: {
+      type: Array,
+      default: [],
     },
   },
   { timestamps: true }
